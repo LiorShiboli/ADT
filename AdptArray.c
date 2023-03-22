@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "AdptArray.h"
 typedef struct AdptArray_
 {
@@ -24,10 +25,11 @@ PAdptArray CreateAdptArray(COPY_FUNC CopyFunc, DEL_FUNC DeleteFunc,PRINT_FUNC Pr
 }
 void DeleteAdptArray(PAdptArray Arr)
 {
-    for (size_t i = 0; i < Arr->size; i++)
+    for (int i = 0; i < Arr->size; i++)
     {
-        if (Arr->ElemArr[i])
+        if (Arr->ElemArr[i]!=NULL)
         {
+            
             Arr->Delete(Arr->ElemArr[i]);
         }
         
@@ -35,7 +37,7 @@ void DeleteAdptArray(PAdptArray Arr)
     free(Arr);
 }
 void PrintDB(PAdptArray Arr){
-     for (size_t i = 0; i < Arr->size; i++)
+     for (int i = 0; i < Arr->size; i++)
     {
         if (Arr->ElemArr[i])
         {
@@ -53,11 +55,12 @@ int GetAdptArraySize(PAdptArray Arr){
 }
 
 PElement GetAdptArrayAt(PAdptArray Arr, int Place){
+    printf("hey");
     if (Arr == NULL|| Arr ->size <= Place)
     {
         return NULL;
     }
-    return Arr->ElemArr[Place];
+    return Arr->Copy(Arr->ElemArr[Place]);
 
 }
 Result SetAdptArrayAt(PAdptArray Arr, int Place, PElement Element){
